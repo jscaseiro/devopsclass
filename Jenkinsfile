@@ -12,10 +12,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                build job: '00-deploy/99-service-deploy', parameters: [
-                        string(name: "PROJECT_NAME", value: env.JOB_BASE_NAME),
-                        string(name: "REPOSITORY", value: scm.getUserRemoteConfigs()[0].getUrl())
-                ], wait: true
+                script {
+                    sh 'rm -rf .git .gitignore Jenkinsfile README.md /app/*';
+                    sh 'cp -r ./* /app/';
+                }
             }
         }
     }
